@@ -51,6 +51,13 @@
     "on-click-middle": "sleep 5 && grimblast --notify copysave area ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"
   },
 
+  "custom/backup": {
+      "format": "󰊢 Backup",
+      "tooltip": "Backup dotfiles to GitHub",
+      "on-click": "~/dotfiles/backup-and-push.sh",
+      "return-type": ""
+  },
+
   "custom/screenrecord": {
     "format": "{}",
     "exec": "if pgrep -x wf-recorder > /dev/null; then if [ $(($(date +%s) % 2)) -eq 0 ]; then echo '<span color=\"#f38ba8\">󰕧</span>'; else echo '󰕧'; fi; else echo '󰕧'; fi",

@@ -96,6 +96,16 @@ box.modules-right > box.horizontal,
     transition: color 0.2s ease-out;
 }
 
+
+
+#custom-backup {
+    background-color: @mantle;
+    border-radius: 5px;
+    margin: 10px 5px;
+    padding: 3px 10px;
+}
+
+
 /* Add specific styling for the screenshot drawer group */
 #screenshot {
     background-color: @mantle;
