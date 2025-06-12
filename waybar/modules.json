@@ -1,0 +1,257 @@
+{
+  "battery": {
+    "bat": "BAT0",
+    "format": "{icon}<span size='10pt'><b>{capacity}</b></span>",
+    "format-critical": "<span font_family='JetBrainsMono Nerd Font' color='#f38ba8'>{icon}</span><small><b>{capacity}</b></small>",
+    "format-good": "<span font_family='JetBrainsMono Nerd Font' color='#a6e3a1'>{icon}</span><small><b>{capacity}</b></small>",
+    "format-icons": [
+      "󰛞 󱢠 󱢠 󱢠 󱢠 ",
+      "󰣐 󱢠 󱢠 󱢠 󱢠 ",
+      "󰣐 󰛞 󱢠 󱢠 󱢠 ",
+      "󰣐 󰣐 󱢠 󱢠 󱢠 ",
+      "󰣐 󰣐 󰛞 󱢠 󱢠 ",
+      "󰣐 󰣐 󰣐 󱢠 󱢠 ",
+      "󰣐 󰣐 󰣐 󰛞 󱢠 ",
+      "󰣐 󰣐 󰣐 󰣐 󱢠 ",
+      "󰣐 󰣐 󰣐 󰣐 󰛞 ",
+      "󰣐 󰣐 󰣐 󰣐 󰣐 "
+    ],
+    "format-time": "{H}hr & {m}min",
+    "format-warning": "<span font_family='JetBrainsMono Nerd Font' color='#f9e2af'>{icon}</span><small><b>{capacity}</b></small>",
+    "interval": 60,
+    "max-length": 25,
+    "states": {
+      "critical": 15,
+      "good": 100,
+      "warning": 30
+    },
+    "tooltip-format": "{time} (󰚥 plugged), at {capacity}%",
+    "tooltip-format-charging": "{time} (󰢟 charging), at {capacity}%",
+    "tooltip-format-discharging": "{time} (󱧦 discharging), at {capacity}%"
+  },
+  "bluetooth": {
+    "format": "",
+    "format-connected": "󰂱",
+    "format-disabled": "󰂲",
+    "format-off": "󰂲",
+    "format-on": "",
+    "on-click": "blueberry",
+    "on-click-right": "rfkill toggle bluetooth",
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t󰥉{device_battery_percentage}%"
+  },
+
+  "custom/screenshot": {
+    "format": "󰄀",
+    "tooltip": "Left: Area • Right: Full Screen • Middle: Timed Area (5s)",
+    "on-click": "grimblast --notify copysave area ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png",
+    "on-click-right": "grimblast --notify copysave screen ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png",
+    "on-click-middle": "sleep 5 && grimblast --notify copysave area ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"
+  },
+
+  "custom/screenrecord": {
+    "format": "{}",
+    "exec": "if pgrep -x wf-recorder > /dev/null; then if [ $(($(date +%s) % 2)) -eq 0 ]; then echo '<span color=\"#f38ba8\">󰕧</span>'; else echo '󰕧'; fi; else echo '󰕧'; fi",
+    "interval": 1,
+    "tooltip": "Left: Area Record • Right: Full Screen Record • Click to stop if recording",
+    "on-click": "if pgrep -x wf-recorder > /dev/null; then pkill wf-recorder && notify-send 'Screen Recording' 'Recording stopped'; else geometry=$(slurp) && wf-recorder -g \"$geometry\" -f ~/Videos/Recordings/$(date +'%Y-%m-%d_%H-%M-%S').mp4 & notify-send 'Screen Recording' 'Area recording started'; fi",
+    "on-click-right": "if pgrep -x wf-recorder > /dev/null; then pkill wf-recorder && notify-send 'Screen Recording' 'Recording stopped'; else wf-recorder -f ~/Videos/Recordings/$(date +'%Y-%m-%d_%H-%M-%S').mp4 & notify-send 'Screen Recording' 'Full screen recording started'; fi"
+
+  },
+"clock#date": {
+    "actions": {
+      "on-scroll-down": "shift_down",
+      "on-scroll-up": "shift_up"
+    },
+    "calendar": {
+      "format": {
+        "days": "<span weight='normal'>{}</span>",
+        "months": "<span color='#cdd6f4'><b>{}</b></span>",
+        "today": "<span color='#f38ba8' weight='700'><u>{}</u></span>",
+        "weekdays": "<span color='#f9e2af'><b>{}</b></span>",
+        "weeks": "<span color='#a6e3a1'><b>W{}</b></span>"
+      },
+      "mode": "month",
+      "mode-mon-col": 1,
+      "on-scroll": 1,
+      "weeks-pos": "right"
+    },
+    "format": "{:%Y.%m.%d}",
+    "interval": 3600,
+    "tooltip-format": "{calendar}",
+    "on-click": "gnome-calendar"
+  },
+  "clock#time": {
+    "format": "{:%H.%M.%S %p}",
+    "interval": 1
+  },
+  "custom/notification": {
+    "escape": true,
+    "exec": "swaync-client -swb",
+    "exec-if": "which swaync-client",
+    "format": "{icon}",
+    "format-icons": {
+      "dnd-inhibited-none": "󰂚<sup></sup>",
+      "dnd-inhibited-notification": "󰂚<span foreground='#f38ba8'><sup></sup></span>",
+      "dnd-none": "󰂛",
+      "dnd-notification": "󰂛<span foreground='#f38ba8'><sup></sup></span>",
+      "inhibited-none": "󰂚<sup>󰜺</sup>",
+      "inhibited-notification": "󰵙<span foreground='#f38ba8'><sup></sup></span>",
+      "none": "󰂚<span color='#6c7086'><sup></sup></span>",
+      "notification": "󰂚<span foreground='#f38ba8'><sup></sup></span>"
+    },
+    "on-click": "sleep 0.1 && swaync-client -t -sw",
+    "on-click-right": "sleep 0.1 && swaync-client -d -sw",
+    "return-type": "json",
+    "tooltip": false
+  },
+
+"group/screenshot": {
+    "drawer": {
+      "children-class": "screenshot-tools",  // Generic class name
+      "transition-duration": 200,            // Faster transition
+      "transition-left-to-right": true
+    },
+    "modules": [
+      "custom/screenshot",    // This will be the visible "handle"
+      "custom/screenrecord",  // Hidden until hover
+      "custom/wallpaper"      // Hidden until hover
+    ],
+    "orientation": "horizontal"  // Better for drawers
+  },
+
+  
+  "group/brightness": {
+    "drawer": {
+      "children-class": "brightness",
+      "transition-duration": 500,
+      "transition-left-to-right": true
+    },
+    "modules": [
+      "backlight",
+      "backlight/slider"
+    ],
+    "orientation": "horizontal"
+  },
+  "group/clock": {
+    "modules": [
+      "clock#date",
+      "clock#time"
+    ],
+    "orientation": "inherit"
+  },
+  "group/sys-info": {
+    "modules": [
+      "network",
+      "bluetooth",
+      "group/volume",
+      "group/brightness"
+    ],
+    "orientation": "horizontal"
+  },
+  "group/volume": {
+    "drawer": {
+      "children-class": "volume",
+      "transition-duration": 500,
+      "transition-left-to-right": true
+    },
+    "modules": [
+      "pulseaudio",
+      "pulseaudio/slider"
+    ],
+    "orientation": "horizontal"
+  },
+  "hyprland/workspaces": {
+    "active-only": false,
+    "all-outputs": true,
+    "format": "{icon}",
+    "format-icons": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "7": "",
+      "8": "",
+      "9": "",
+      "default": "",
+      "persistent": "",
+      "special": ""
+    },
+    "on-scroll-down": "hyprctl dispatch workspace e+1",
+    "on-scroll-up": "hyprctl dispatch workspace e-1",
+    "persistent-workspaces": {
+      "*": 9
+    }
+  },
+  "network": {
+    "format": "{icon}",
+    "format-disconnected": "󰖪",
+    "format-ethernet": "󰈀/{cidr}",
+    "format-icons": [
+      "󰤯",
+      "󰤟",
+      "󰤢",
+      "󰤥",
+      "󰤨"
+    ],
+    "format-linked": "󰖩",
+    "format-wifi": "{icon}",
+    "interval": 30,
+    "on-click": "nm-connection-editor",
+    "on-click-right": "rfkill toggle wifi",
+    "tooltip": true,
+    "tooltip-format": "interface:\t{ifname}\n\nconnected to {essid} at {signalStrength}% strength",
+    "tooltip-format-disconnected": "interface: {ifname}\nconnected to {essid}\nat {signalStrength}% strength"
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-bluetooth": "{icon}",
+    "format-icons": {
+      "default": [
+        "󰕿",
+        "",
+        "󰕾"
+      ]
+    },
+    "format-muted": "󰖁",
+    "on-click": "pavucontrol",
+    "on-click-right": "pactl set-sink-mute 0 toggle",
+    "scroll-step": 1,
+    "tooltip-format": "{desc}\t{icon}{volume}%"
+  },
+  "pulseaudio/slider": {
+    "max": 100,
+    "min": 0,
+    "orientation": "horizontal"
+  },
+  "tray": {
+    "icon-size": 18
+  },
+
+  "custom/power-button": {
+    "format": "",
+    "on-click": "wlogout",
+    "tooltip": false
+  },
+
+  "custom/updates": {
+    "format": "📦",
+    "exec": "~/.config/waybar/scripts/check-updates.sh",
+    "interval": 3600,
+    "return-type": "json",
+    "tooltip": true,
+    "on-click": "rebuild"
+  },
+
+  "custom/wallpaper": {
+      "format": " ",
+      "tooltip": "Change wallpaper",
+      "on-click": "~/.config/waybar/scripts/change-wallpaper.sh",
+      "on-click-right": "nemo ~/Pictures/wallpapers" 
+  },
+
+}

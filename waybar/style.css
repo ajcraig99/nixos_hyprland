@@ -1,0 +1,275 @@
+@import url("catppuccin-mocha.css");
+
+#waybar {
+    border-radius: 15px;
+    margin: 5px;
+    background-color: @crust;
+    color: @text;
+    opacity: 0.9;
+    border: 2px solid @accent;
+    font-family: "SF Mono Regular", "JetBrainsMono Nerd Font",monospace;
+    font-size: 16px;
+    /* Prevent flickering */
+    transition: none;
+    animation: none;
+}
+
+/* Anti-flicker optimizations */
+#waybar,
+#waybar * {
+    /* Prevent unwanted animations */
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Space first and last modules evenly */
+.modules-right:last-child { margin-right: 10px; }
+.modules-left:first-child { margin-left: 10px; }
+
+/* Make all the NF icons bigger */
+#battery,
+#sys-info,
+#custom-notification,
+#pulseaudio,
+#custom-power-button,
+#custom-screenshot,
+#custom-screenrecord,
+#custom-wallpaper
+{
+    font-size: 18px;
+}
+
+/* Active and inactive states with smooth transitions */
+#network.wifi {
+    color: @text;
+}
+
+#network,
+#bluetooth,
+#pulseaudio {
+    transition: color 0.3s ease-out;
+}
+
+#network.disabled,
+#network.disconnected,
+#bluetooth.disabled,
+#bluetooth.off,
+#pulseaudio.muted,
+#pulseaudio.source-muted
+{
+    color: alpha(@subtext0, 0.7);
+    /* Color transition automatically applied */
+}
+
+/* Selecting every widget "group" */
+#workspaces,
+#battery,
+box.modules-right > box.horizontal,
+#custom-notification,
+#sys-info,
+#custom-power-button
+{
+    background-color: @mantle;
+    border-radius: 5px;
+    margin: 10px 5px;
+    padding: 3px 10px;
+}
+
+#custom-wallpaper {
+    padding: 3px 5px 0px 10px; /* Top Right Bottom Left */
+}
+
+#custom-power-button {
+    padding-right: 17px;
+    padding-left: 12px;
+    background-color: alpha(@red, 0.1);
+    color: @red;
+    transition: all 0.2s ease-out;
+}
+
+#custom-power-button:hover {
+    background-color: alpha(@red, 0.2);
+}
+
+/* Prevent width changes that cause flickering */
+#battery {
+    min-width: 80px;
+    transition: color 0.2s ease-out;
+}
+
+/* Add specific styling for the screenshot drawer group */
+#screenshot {
+    background-color: @mantle;
+    border-radius: 5px;
+    margin: 10px 5px;
+    padding: 3px 10px;
+}
+
+/* Prevent drawer children from having conflicting animations */
+.screenshot-tools {
+    transition: none;
+}
+
+.screenshot-tools > * {
+    transition: none;
+    margin: 0px 5px; /* Add spacing between drawer items */
+    padding: 3px 5px; /* Add some padding to each item */
+}
+
+/* Specific spacing for drawer modules */
+#custom-screenshot,
+#custom-screenrecord,
+#custom-wallpaper {
+    margin: 0px 3px;
+    padding: 2px 5px;
+}
+
+/* Styling workspace with smooth hover transitions */
+#workspaces,
+#workspaces button,
+#pulseaudio-slider {
+    all: unset;
+}
+
+#workspaces {
+    background-color: @mantle;
+    margin: 10px 1px;
+    border-radius: 8px;
+    border: 2px solid @accent;
+}
+
+#workspaces > button { 
+    padding: 5px 10px; 
+    font-weight: 900;
+    font-size: 20px;
+    border-radius: 0px;
+    /* Add smooth transitions */
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#workspaces > button.empty {
+    color: @overlay0;
+}
+
+#workspaces > button.visible {
+    color: @overlay0;
+}
+
+#workspaces > button.active {
+    color: @blue;
+    background: alpha(@blue, 0.1);
+}
+
+#workspaces > button:hover { 
+    background: alpha(@blue, 0.2);
+    color: @text;
+}
+
+#workspaces > button:first-child {
+    border-radius: 8px 0px 0px 8px;
+    padding-left: 10px;
+}
+
+#workspaces > button:last-child {
+    border-radius: 0px 8px 8px 0px;
+    padding-right: 10px;
+}
+
+/* Styling tray */
+#tray {
+    background-color: transparent;
+    padding: 0px 0px;
+    margin: 0px;
+}
+
+#tray .active image {
+    margin: 0px;
+    padding: 0px 5px;
+}
+
+/* Wifi module spaced away from bluetooth*/
+#network,
+#bluetooth
+{
+    margin-right: 15px;
+}
+
+#bluetooth {
+  margin-right: 15px;
+}
+
+#network {
+  margin-right: 18px;
+}
+
+#backlight {
+    font-size: 16px;
+    margin-right: 5px;
+    margin-left: 7px;
+}
+
+#pulseaudio {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+#pulseaudio.bluetooth {
+    color: @blue;
+}
+
+/* Styling brightness and volume sliders with smooth animations */
+#pulseaudio-slider {
+    margin-left: 5px;
+    margin-right: 5px;
+    border: none;
+}
+
+#pulseaudio-slider slider {
+    margin-left: -10px;
+    min-width: 10px;
+    min-height: 10px;
+    background: transparent;
+    box-shadow: none;
+    padding: 0px;
+}
+
+#pulseaudio-slider trough {
+    min-width: 80px;
+    border-radius: 5px;
+    background-color: @surface0;
+    transition: background-color 0.2s ease-out;
+}
+
+#pulseaudio-slider highlight {
+    border-radius: 5px;
+    min-height: 8px;
+    transition: width 0.1s ease-out; /* Smooth slider movement */
+}
+
+/* Styling the clock - disable transitions to prevent time update flickering */
+#clock.date {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0px 20px 0px 0px;
+    transition: none;
+}
+
+#clock.time {
+    padding: 0px;
+    font-weight: 500;
+    font-size: 18px;
+    transition: none;
+}
+
+/* Styling tooltips */
+tooltip {
+    border-radius: 15px;
+    background: @surface0;
+}
+
+tooltip > box {
+    padding: 15px
+}
+
+tooltip label {
+    color: @text;
+}

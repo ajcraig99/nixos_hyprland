@@ -1,0 +1,15 @@
+# Dim brightness after 5 minutes
+timeout 360 'ddcutil setvcp 10 10' resume 'ddcutil setvcp 10 100'
+
+# Lock screen after 6 minutes
+timeout 500 'swaylock -f'
+
+# Turn off display after 10 minutes  
+timeout 600 'hyprctl dispatch dpms off' resume 'ddcutil setvcp 10 100'
+
+# Suspend after 15 minutes
+timeout 900 'systemctl suspend'
+
+# Always lock before sleep and restore brightness after
+before-sleep 'swaylock -f' resume 'ddcutil setvcp 10 100'
+
