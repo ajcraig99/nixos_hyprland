@@ -52,7 +52,7 @@
   },
 
   "custom/backup": {
-      "format": "󰊢 Backup",
+      "format": "",
       "tooltip": "Backup dotfiles to GitHub",
       "on-click": "~/dotfiles/backup-and-push.sh",
       "return-type": ""
