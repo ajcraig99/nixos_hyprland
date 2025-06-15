@@ -29,6 +29,12 @@
     "tooltip-format-charging": "{time} (󰢟 charging), at {capacity}%",
     "tooltip-format-discharging": "{time} (󱧦 discharging), at {capacity}%"
   },
+
+  "cpu": {
+    "format": "{usage}% ",
+    "tooltip": true
+  },
+  
   "bluetooth": {
     "format": "",
     "format-connected": "󰂱",
@@ -53,9 +59,8 @@
 
   "custom/backup": {
       "format": "",
-      "tooltip": "Backup dotfiles to GitHub",
-      "on-click": "~/dotfiles/backup-and-push.sh",
-      "return-type": ""
+      "tooltip": false,
+      "on-click": "~/dotfiles/backup-and-push.sh"
   },
 
   "custom/screenrecord": {
@@ -114,21 +119,6 @@
     "return-type": "json",
     "tooltip": false
   },
-
-"group/screenshot": {
-    "drawer": {
-      "children-class": "screenshot-tools",  // Generic class name
-      "transition-duration": 200,            // Faster transition
-      "transition-left-to-right": true
-    },
-    "modules": [
-      "custom/screenshot",    // This will be the visible "handle"
-      "custom/screenrecord",  // Hidden until hover
-      "custom/wallpaper"      // Hidden until hover
-    ],
-    "orientation": "horizontal"  // Better for drawers
-  },
-
   
   "group/brightness": {
     "drawer": {
@@ -137,8 +127,8 @@
       "transition-left-to-right": true
     },
     "modules": [
-      "backlight",
-      "backlight/slider"
+       "custom/brightness",
+       "custom/brightness-slider"
     ],
     "orientation": "horizontal"
   },
@@ -151,6 +141,7 @@
   },
   "group/sys-info": {
     "modules": [
+      "cpu",
       "network",
       "bluetooth",
       "group/volume",
@@ -197,7 +188,8 @@
   "network": {
     "format": "{icon}",
     "format-disconnected": "󰖪",
-    "format-ethernet": "󰈀/{cidr}",
+    "format-ethernet-disconnected": "󰌙",
+    "format-ethernet": "󰈀",
     "format-icons": [
       "󰤯",
       "󰤟",
@@ -247,6 +239,7 @@
 
   "custom/updates": {
     "format": "📦",
+    "justify": "center",
     "exec": "~/.config/waybar/scripts/check-updates.sh",
     "interval": 3600,
     "return-type": "json",
@@ -256,9 +249,45 @@
 
   "custom/wallpaper": {
       "format": " ",
+      "justify": "center",
       "tooltip": "Change wallpaper",
       "on-click": "~/.config/waybar/scripts/change-wallpaper.sh",
       "on-click-right": "nemo ~/Pictures/wallpapers" 
   },
+
+"custom/brightness": {
+      "format": "{icon}",
+      "format-icons": ["󰃞"],
+      "exec": "~/.config/waybar/scripts/brightness.sh get",
+      "interval": 10,
+      "return-type": "json",
+      "tooltip": true
+  },
+  
+  "custom/brightness-slider": {
+      "exec": "~/.config/waybar/scripts/brightness.sh get-percentage",
+      "interval": 5,
+      "max": 100,
+      "min":0,
+      "orientation": "horizontal",      
+      "on-scroll-up": "current=$(~/.config/waybar/scripts/brightness.sh get-percentage); new=$((current + 5)); if [ $new -le 100 ]; then ~/.config/waybar/scripts/brightness.sh set $new; fi",
+      "on-scroll-down": "current=$(~/.config/waybar/scripts/brightness.sh get-percentage); new=$((current - 5)); if [ $new -ge 0 ]; then ~/.config/waybar/scripts/brightness.sh set $new; fi"
+  },
+
+  "group/all-right-modules": {
+    "modules": [
+      "cpu",
+      "custom/backup", 
+      "custom/screenshot", 
+      "custom/screenrecord", 
+      "custom/wallpaper", 
+      "network",
+      "bluetooth",
+      "group/volume",
+      "group/brightness", 
+      "custom/power-button"
+    ],
+    "orientation": "horizontal"
+  }
 
 }

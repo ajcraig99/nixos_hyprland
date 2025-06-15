@@ -1,5 +1,8 @@
 @import url("catppuccin-mocha.css");
 
+/* Global padding and margin values for reference */
+/* 20px 10px  Top Right Bottom Left */
+
 #waybar {
     border-radius: 15px;
     margin: 5px;
@@ -63,31 +66,47 @@
 /* Selecting every widget "group" */
 #workspaces,
 #battery,
-box.modules-right > box.horizontal,
 #custom-notification,
 #sys-info,
-#custom-power-button
+#custom-power-button,
+#cpu
+
 {
-    background-color: @mantle;
     border-radius: 5px;
-    margin: 10px 5px;
-    padding: 3px 10px;
+}
+
+
+#custom-wallpaper:hover,
+#custom-backup:hover,
+#custom-screenshot:hover,
+#custom-screenrecord:hover,
+#bluetooth:hover, 
+#network:hover,
+#pulseaudio:hover,
+#custom-brightness-slider:hover,
+#cpu:hover {
+    color: @text;
+    text-shadow:
+        0 0 3px @blue;
 }
 
 #custom-wallpaper {
-    padding: 3px 5px 0px 10px; /* Top Right Bottom Left */
+    margin: 12px 1px;
+    padding: 3px 1px; /* Top Right Bottom Left */
 }
 
 #custom-power-button {
     padding-right: 17px;
     padding-left: 12px;
-    background-color: alpha(@red, 0.1);
     color: @red;
     transition: all 0.2s ease-out;
 }
 
 #custom-power-button:hover {
-    background-color: alpha(@red, 0.2);
+    color: @red;
+    text-shadow:
+        0 0 3px @red,
+        0 0 8px @red;
 }
 
 /* Prevent width changes that cause flickering */
@@ -96,22 +115,23 @@ box.modules-right > box.horizontal,
     transition: color 0.2s ease-out;
 }
 
-
-
-#custom-backup {
-    background-color: @mantle;
-    border-radius: 5px;
-    margin: 10px 10px 10px 10px;
-    padding: 3px 15px 0px 10px; /* Top, Right, Bottom, Left (clockwise) */
+#cpu {
+	margin: 12px 2px;
+	padding: 3px 15px;
 }
 
+#custom-backup {
+    border-radius: 5px;
+    margin: 12px 2px;
+    padding: 3px 15px; /* Top, Right, Bottom, Left (clockwise) */ 
+}
+ 
 
 /* Add specific styling for the screenshot drawer group */
 #screenshot {
-    background-color: @mantle;
     border-radius: 5px;
-    margin: 10px 5px;
-    padding: 3px 10px;
+    margin: 12px 2px;
+    padding: 3px 5px;
 }
 
 /* Prevent drawer children from having conflicting animations */
@@ -121,16 +141,15 @@ box.modules-right > box.horizontal,
 
 .screenshot-tools > * {
     transition: none;
-    margin: 0px 5px; /* Add spacing between drawer items */
-    padding: 3px 5px; /* Add some padding to each item */
 }
 
 /* Specific spacing for drawer modules */
 #custom-screenshot,
 #custom-screenrecord,
 #custom-wallpaper {
-    margin: 0px 3px;
-    padding: 2px 5px;
+    margin-left: 2px;
+    margin-right: 0px;
+    padding: 3px 6px;
 }
 
 /* Styling workspace with smooth hover transitions */
@@ -142,7 +161,7 @@ box.modules-right > box.horizontal,
 
 #workspaces {
     background-color: @crust;
-    margin: 10px 1px;
+    margin: 12px 1px;
     border-radius: 8px;
     border: 0px solid @accent;
 }
@@ -287,4 +306,38 @@ tooltip > box {
 
 tooltip label {
     color: @text;
+}
+
+#custom-brightness {
+    font-size: 16px;
+    margin-right: 5px;
+    margin-left: 7px;
+}
+
+#custom-brightness-slider {
+    margin-left: 5px;
+    margin-right: 5px;
+    border: none;
+}
+
+#custom-brightness-slider slider {
+    margin-left: -10px;
+    min-width: 10px;
+    min-height: 10px;
+    background: transparent;
+    box-shadow: none;
+    padding: 0px;
+}
+
+#custom-brightness-slider trough {
+    min-width: 80px;
+    border-radius: 5px;
+    background-color: @surface0;
+    transition: background-color 0.2s ease-out;
+}
+
+#custom-brightness-slider highlight {
+    border-radius: 5px;
+    min-height: 8px;
+    transition: width 0.1s ease-out;
 }

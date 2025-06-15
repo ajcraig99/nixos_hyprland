@@ -33,7 +33,7 @@
   networking.hostName = "nixos";
   # Enable NetworkManager for easy network configuration.
   networking.networkmanager.enable = true;
-
+  boot.kernelModules = [ "iwlwifi" "i2c-dev"];
   # Set your system's time zone.
   time.timeZone = "Pacific/Auckland";
 
@@ -76,6 +76,7 @@
     enable32Bit = true; # Enable 32-bit graphics support for compatibility.
   };
 
+  
   # Enable i2c permissions
   hardware.i2c.enable = true;
 
@@ -105,6 +106,8 @@
     fastfetch             # Neofetch-like system info tool.
     vesktop               # Discord client
     peazip                # Archive manager
+    networkmanagerapplet  # Network manager
+    linux-firmware        # Firmware for wifi card
 
     # Web Browser
     firefox
