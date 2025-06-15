@@ -288,6 +288,36 @@
       "custom/power-button"
     ],
     "orientation": "horizontal"
+  },
+  "modules-left": ["mpris"],
+  
+  "mpris": {
+    "format": "{dynamic}",
+    "format-paused": "⏸",
+    "player-icons": {
+      "default": "🎵",
+      "mpv": "🎬",
+      "spotify": "🎶",
+      "firefox": "🌍",
+      "chrome": "🌐"
+    },
+    "status-icons": {
+      "paused": "⏸",
+      "playing": "▶"
+    },
+    "ignored-players": ["firefox", "chrome", "chromium"],
+    "player": "spotify",
+    "max-length": 60,
+    "interval": 1,
+    "dynamic-order": ["title", "artist", "position", "length"],
+    "dynamic-separator": " - ",
+    "dynamic-len": 60,
+    "on-click": "playerctl -p spotify play-pause",
+    "on-click-right": "playerctl -p spotify next",
+    "on-click-middle": "playerctl -p spotify previous",
+    "on-scroll-up": "playerctl -p spotify volume 0.05+",
+    "on-scroll-down": "playerctl -p spotify volume 0.05-",
+    "tooltip": true,
+    "tooltip-format": "{player}: {artist} - {title}\\nAlbum: {album}"
   }
-
 }

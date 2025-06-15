@@ -108,6 +108,7 @@
     peazip                # Archive manager
     networkmanagerapplet  # Network manager
     linux-firmware        # Firmware for wifi card
+    bc                    # Basic calculator
 
     # Web Browser
     firefox
@@ -117,11 +118,18 @@
     ffmpegthumbnailer     # Thumbnailer for video files.
     loupe                 # Simple image viewer.
     gthumb                # Image viewer and organizer.
-    ffmpeg
+    ffmpeg                # Video converter
+    mpv                   # Media control dependancy
+    pavucontrol           
+    easyeffects
+    jq
+    socat
+    wireplumber
+    playerctl
+    
 
     # Terminal Emulators
     alacritty             # GPU-accelerated terminal emulator.
-    foot                  # Fast, lightweight Wayland terminal emulator.
 
     # Wayland/Hyprland Specific Tools
     waybar                # Highly customizable Wayland bar.
@@ -140,6 +148,7 @@
     rofi-wayland          # Rofi port for Wayland.
     swaynotificationcenter # Notification daemon for Sway/Hyprland.
     swww                  # Wallpaper daemon for Wayland.
+    wlogout               # Logout manager
 
     # File Management
     nemo                  # Feature-rich file manager (Cinnamon's default).
