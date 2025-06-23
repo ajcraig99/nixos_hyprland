@@ -1,11 +1,11 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
-    //   "type": "sixel",
-    //   //"source": "/home/denji/.config/fastfetch/apartment.sixel",
-    //   "source": "/home/denji/.config/fastfetch/apartment.png",
-    "height": 14,
+    "type": "kitty",
+    "source": "/home/arron/.config/fastfetch/rosie.png",
+    "height": 10,
     "padding": {
+      "top": 3,
       "left": 2
     }
   },
@@ -13,11 +13,12 @@
     "playerName": "mpris"
   },
   "display": {
-    // "separator": " » ",
-    "separator": "",
+
+    "separator": "»",
     "color": "magenta",
     "key": {
       "width": 12
+     
     },
     "size": {
       "ndigits": 0
@@ -37,6 +38,7 @@
     "noBuffer": true
   },
   "modules": [
+
     "break",
     "break",
     // {
@@ -73,10 +75,6 @@
       "key": "WM"
     },
 
-    // {
-    //   "type": "battery",
-    //   "key": "bat"
-    // },
     {
       "type": "memory",
       "key": "Memory",
@@ -133,6 +131,8 @@
     {
       "type": "colors",
       "symbol": "Square"
-    }
+    },
+
+
   ]
 }

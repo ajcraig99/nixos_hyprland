@@ -1,34 +1,24 @@
 # This is the main NixOS configuration file.
-# It defines what should be installed and how your system should be configured.
-# Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 { config, lib, pkgs, quickshell, spicetify-nix, ... }:
 
 {
   # Imports:
-  # This section includes other Nix files to modularize your configuration.
   imports =
     [
       # Include the results of the hardware scan, essential for system specific drivers and modules.
       ./hardware-configuration.nix
     ];
 
-  #############################################################################
-  # 1. NixOS System Core Configuration
-  #    Basic system settings like flakes, unfree packages, bootloader, and networking.
-  #############################################################################
-
   # Enable experimental features for Nix command and flakes.
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Allow installation of unfree packages (e.g., proprietary drivers, some applications).
   nixpkgs.config.allowUnfree = true;
-
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
-
+  # Enable necessary kernel modules for cifs
+  boot.supportedFilesystems = [ "cifs" ];
   # Define your hostname for network identification.
   networking.hostName = "nixos";
   # Enable NetworkManager for easy network configuration.
@@ -36,7 +26,6 @@
   boot.kernelModules = [ "iwlwifi" "i2c-dev"];
   # Set your system's time zone.
   time.timeZone = "Pacific/Auckland";
-
   # Configure basic audio support with PipeWire.
   security.rtkit.enable = true;
   services.pipewire = {
@@ -45,12 +34,7 @@
     alsa.support32Bit = true; # Enable 32-bit ALSA support.
     pulse.enable = true;    # PulseAudio compatibility layer for PipeWire.
   };
-
-  #############################################################################
   # 2. Hardware Specific Configuration
-  #    Settings related to GPU, Bluetooth, and other hardware components.
-  #############################################################################
-
   # NVIDIA specific kernel parameters (Original settings).
   boot.kernelParams = [
     "nvidia-drm.modeset=1"
@@ -58,7 +42,6 @@
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     "nvidia.NVreg_TemporaryFilePath=/var/tmp" 
   ];
-
   # NVIDIA display drivers and settings (Original settings).
   services.xserver.videoDrivers = [ "nvidia" ]; # Re-added as it was in your original config.
   hardware.nvidia = {
@@ -69,33 +52,26 @@
     nvidiaSettings = true;          # Allow access to nvidia-settings utility.
     package = config.boot.kernelPackages.nvidiaPackages.stable; # Reverted to original: Use stable driver.
   };
-
   # General graphics configuration (updated for NixOS 25.05).
   hardware.graphics = {
     enable = true;
     enable32Bit = true; # Enable 32-bit graphics support for compatibility.
   };
-
-  
   # Enable i2c permissions
   hardware.i2c.enable = true;
-
   # Bluetooth configuration.
   hardware.bluetooth.enable = true;     # Enable Bluetooth functionality.
   hardware.bluetooth.powerOnBoot = true; # Turn on Bluetooth when the system boots.
   services.blueman.enable = true;       # Enable Blueman, a graphical Bluetooth manager.
 
-  # Reverted: Removed all systemd suspend/resume service overrides (systemd.services.systemd-suspend/hibernate/hybrid-sleep.serviceConfig)
-  # Reverted: Removed services.udev.enable (it's usually true by default or handled elsewhere, and wasn't causing issues before)
-  # Reverted: Removed services.logind.extraConfig (this was an addition for suspend troubleshooting)
+  services.logind = {
+    extraConfig = ''
+      IdleAction=hibernate
+      IdleActionSec=2min
+    '';
+    };
 
-  #############################################################################
   # 3. Programs & Applications
-  #    List of user applications and system-wide programs.
-  #############################################################################
-
-  # List packages installed in the system profile.
-  # You can use https://search.nixos.org/ to find more packages and options.
   environment.systemPackages = with pkgs; [
     # Basic Utilities
     git                   # Version control system.
@@ -109,10 +85,11 @@
     networkmanagerapplet  # Network manager
     linux-firmware        # Firmware for wifi card
     bc                    # Basic calculator
-
+    cifs-utils            # For SMB mounting
+    nvtopPackages.nvidia  # GPU monitor in terminal
+    btop                  # System monitor
     # Web Browser
     firefox
-
     # Multimedia
     vlc                   # Versatile media player.
     ffmpegthumbnailer     # Thumbnailer for video files.
@@ -126,13 +103,17 @@
     socat
     wireplumber
     playerctl
-    
-
+    yt-dlp                # Youtube downloader
+    musikcube             # Terminal music player
+    cava                  # Terminal visualiser
+    steam                 # Its just steam
     # Terminal Emulators
     alacritty             # GPU-accelerated terminal emulator.
-
+    kitty
+    foot
     # Wayland/Hyprland Specific Tools
     waybar                # Highly customizable Wayland bar.
+    ironbar
     wofi                  # Launcher for Wayland.
     dunst                 # Lightweight notification daemon.
     hyprpaper             # Wallpaper changer
@@ -149,14 +130,12 @@
     swaynotificationcenter # Notification daemon for Sway/Hyprland.
     swww                  # Wallpaper daemon for Wayland.
     wlogout               # Logout manager
-
     # File Management
     nemo                  # Feature-rich file manager (Cinnamon's default).
     nemo-fileroller       # Archive integration for Nemo.
     gvfs                  # GNOME Virtual File System (needed for various file operations).
     xfce.tumbler          # Thumbnail service (specifically XFCE's, often used with Nemo).
     webp-pixbuf-loader    # WebP image format support for GTK applications.
-
     # Zsh and its plugins/tools
     zsh                   # Zsh shell.
     zsh-autosuggestions   # Suggests commands as you type.
@@ -165,19 +144,28 @@
     fzf                   # Fuzzy finder for command line.
     bat                   # Cat clone with syntax highlighting and Git integration.
     eza                   # Modern replacement for ls.
-
     # General tools and applications
     obsidian              # Note taking
     gnome-calendar        # Calander app  
-
+    inkscape-with-extensions 
+    gimp
+    pdf4qt
     # QuickShell for Nix package management, ensure it's built for your system.
     quickshell.packages.${pkgs.system}.default
 
     # Theming related packages
     catppuccin-cursors.mochaDark # Catppuccin themed cursors.
     catppuccin-gtk        # Catppuccin GTK theme.
+    dracula-theme         # Dracula GTK theme
+    dracula-qt5-theme
+    capitaine-cursors     # Capitaine cursor pack
     adwaita-icon-theme    # Default GNOME icon theme (good fallback).
     gtk3                  # GTK 3 library (required by many GTK apps).
+
+    # Custom mp3 audiobook converter tool
+    (pkgs.writeShellScriptBin "mp3tom4b" ''
+      exec ${pkgs.bash}/bin/bash "/mnt/NAS/Data/70-79 Tools&Software/76 - Linux/76.01 - Bash/merge_mp3_m4b.sh" "$@"
+    '')
 
     # SDDM Catppuccin theme configuration, built as a system package.
     (catppuccin-sddm.override {
@@ -196,10 +184,6 @@
     nerd-fonts.fira-code        # Fira Code Nerd Font.
     font-awesome                # Icon font, often used in status bars.
   ];
-
-
-
-
 
   #############################################################################
   # 4. Desktop Environment & Services
@@ -349,6 +333,8 @@
       source ${pkgs.fzf}/share/fzf/completion.zsh
     '';
   };
+
+
 
   # Spicetify configuration for Spotify theming.
   programs.spicetify =

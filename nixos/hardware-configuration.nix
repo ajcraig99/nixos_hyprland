@@ -24,6 +24,51 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
+   fileSystems."/mnt/NAS" = {
+     device = "//192.168.20.41/NAS";  # Replace with your NAS IP and share name
+     fsType = "cifs";
+     options = [
+       "credentials=/etc/nixos/secrets/smb-credentials"
+       "uid=1000"        # Your user ID (run `id` to check)
+       "gid=100"         # Your group ID (usually 'users' group)
+       "iocharset=utf8"
+       "file_mode=0777"
+       "dir_mode=0777"
+       "vers=3.0"        # SMB version, try 2.1 or 1.0 if 3.0 doesn't work
+       "nofail"          # Don't fail boot if mount fails
+       "x-systemd.automount"  # Auto-mount on access
+       "x-systemd.device-timeout=10"
+     ];
+   };
+
+   fileSystems."/mnt/Backups" = {
+     device = "//192.168.20.41/Backups";  # Replace with your NAS IP and share name
+     fsType = "cifs";
+     options = [
+       "credentials=/etc/nixos/secrets/smb-credentials"
+       "uid=1000"        # Your user ID (run `id` to check)
+       "gid=100"         # Your group ID (usually 'users' group)
+       "iocharset=utf8"
+       "file_mode=0777"
+       "dir_mode=0777"
+       "vers=3.0"        # SMB version, try 2.1 or 1.0 if 3.0 doesn't work
+       "nofail"          # Don't fail boot if mount fails
+       "x-systemd.automount"  # Auto-mount on access
+       "x-systemd.device-timeout=10"
+     ];
+   };
+
+   fileSystems."/mnt/SSD4TB" = {
+     device = "/dev/sda";
+     fsType = "ext4";  # Replace with your actual filesystem (ext4, ntfs, xfs, etc.)
+     options = [
+       "defaults"
+       "nofail"          # Don't fail boot if disk isn't present
+       "user"            # Allow regular users to mount/unmount
+       "exec"            # Allow execution of binaries
+     ];
+   };
+
   swapDevices =
     [ { device = "/dev/disk/by-uuid/2289fdd2-be17-4078-928c-68e8601f3799"; }
     ];
