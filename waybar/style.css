@@ -187,7 +187,6 @@
     text-shadow:
         0 0 3px @text,
         0 0 8pc @text,
-        0 0 10px @text;
 }
 
 #workspaces > button:hover { 
