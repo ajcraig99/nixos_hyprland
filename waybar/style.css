@@ -186,14 +186,14 @@
     color: @blue;
     text-shadow:
         0 0 3px @text,
-        0 0 8pc @text,
+        0 0 8px @text;
 }
 
 #workspaces > button:hover { 
     color: @text;
     text-shadow:
         0 0 3px @blue,
-        0 0 8pc @blue;
+        0 0 8px @blue;
 }
 
 #workspaces > button:first-child {

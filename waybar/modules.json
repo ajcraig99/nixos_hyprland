@@ -63,6 +63,15 @@
       "on-click": "~/dotfiles/backup-and-push.sh"
   },
 
+   "custom/idle-toggle": {
+    "format": "{}",
+    "exec": "~/.config/waybar/scripts/idle-toggle.sh status",
+    "on-click": "~/.config/waybar/scripts/idle-toggle.sh toggle",
+    "interval": 1,
+    "tooltip": true,
+    "return-type": "json"
+  },
+
   "custom/screenrecord": {
     "format": "{}",
     "exec": "if pgrep -x wf-recorder > /dev/null; then if [ $(($(date +%s) % 2)) -eq 0 ]; then echo '<span color=\"#f38ba8\">󰕧</span>'; else echo '󰕧'; fi; else echo '󰕧'; fi",
@@ -90,7 +99,8 @@
       "on-scroll": 1,
       "weeks-pos": "right"
     },
-    "format": "{:%Y.%m.%d}",
+
+    "format": "{:%A %b %e}",
     "interval": 3600,
     "tooltip-format": "{calendar}",
     "on-click": "gnome-calendar"

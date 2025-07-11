@@ -1,6 +1,7 @@
 {
     "colorscheme": "catppuccin-mocha-transparent",
     "mouse": true,
-    "clipboard": "external",
-    "useprimary": false
+    "clipboard": "terminal",
+    "useprimary": false,
+    "mkparents": true
 }

@@ -29,10 +29,7 @@
   # Configure basic audio support with PipeWire.
   security.rtkit.enable = true;
   services.pipewire = {
-    enable = true;          # Enable PipeWire.
-    alsa.enable = true;     # ALSA compatibility layer for PipeWire.
-    alsa.support32Bit = true; # Enable 32-bit ALSA support.
-    pulse.enable = true;    # PulseAudio compatibility layer for PipeWire.
+
   };
   # 2. Hardware Specific Configuration
   # NVIDIA specific kernel parameters (Original settings).
@@ -63,7 +60,14 @@
   hardware.bluetooth.enable = true;     # Enable Bluetooth functionality.
   hardware.bluetooth.powerOnBoot = true; # Turn on Bluetooth when the system boots.
   services.blueman.enable = true;       # Enable Blueman, a graphical Bluetooth manager.
-
+  # Enable Qemu
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
+  virtualisation.libvirtd.qemu.runAsRoot = false;  # Optional: run QEMU as user instead of root
+  systemd.services.libvirtd.wantedBy = [ "multi-user.target" ];
+  virtualisation.libvirtd.qemu.swtpm.enable = true; 
+  
   services.logind = {
     extraConfig = ''
       IdleAction=hibernate
@@ -88,6 +92,7 @@
     cifs-utils            # For SMB mounting
     nvtopPackages.nvidia  # GPU monitor in terminal
     btop                  # System monitor
+    dysk
     # Web Browser
     firefox
     # Multimedia
@@ -113,12 +118,10 @@
     foot
     # Wayland/Hyprland Specific Tools
     waybar                # Highly customizable Wayland bar.
-    ironbar
     wofi                  # Launcher for Wayland.
-    dunst                 # Lightweight notification daemon.
     hyprpaper             # Wallpaper changer
-    swaylock-effects
-    swayidle              # Idle management tool
+    hyprlock
+    hypridle
     ddcutil
     wl-clipboard          # Wayland clipboard utilities.
     grim                  # Grab images from a Wayland compositor.
@@ -136,6 +139,7 @@
     gvfs                  # GNOME Virtual File System (needed for various file operations).
     xfce.tumbler          # Thumbnail service (specifically XFCE's, often used with Nemo).
     webp-pixbuf-loader    # WebP image format support for GTK applications.
+    p7zip
     # Zsh and its plugins/tools
     zsh                   # Zsh shell.
     zsh-autosuggestions   # Suggests commands as you type.
@@ -150,6 +154,8 @@
     inkscape-with-extensions 
     gimp
     pdf4qt
+    onlyoffice-desktopeditors
+    
     # QuickShell for Nix package management, ensure it's built for your system.
     quickshell.packages.${pkgs.system}.default
 
@@ -271,7 +277,7 @@
   # Define your user account.
   users.users.arron = {
     isNormalUser = true; # Designate 'arron' as a normal user.
-    extraGroups = [ "wheel" "networkmanager" "video" "i2c"]; # Add user to 'wheel' (for sudo) and 'networkmanager' groups.
+    extraGroups = [ "wheel" "networkmanager" "video" "i2c" "libvirtd" ]; # Add user to 'wheel' (for sudo) and 'networkmanager' groups.
     initialPassword = "password"; # Set an initial password (CHANGE THIS AFTER INITIAL BOOT!).
     packages = with pkgs; [
       # User-specific packages can go here if you don't want them system-wide.
