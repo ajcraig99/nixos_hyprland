@@ -19,6 +19,8 @@ cp -r ~/.config/micro/* micro/
 cp -r ~/.config/nemo/* nemo/
 cp -r ~/.config/swayidle/* swayidle/
 cp -r ~/.config/swaylock/* swaylock/
+cp -r ~/.config/rofi/* rofi/
+cp -r ~/.config/kitty/* kitty/
 
 
 echo "Done! Ready to commit and push."
