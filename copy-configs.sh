@@ -3,7 +3,7 @@
 
 
 # Create directories
-mkdir -p nixos hypr waybar terminal apps fastfetch micro nemo swayidle swaylock
+mkdir -p nixos hypr waybar terminal apps fastfetch micro nemo swayidle swaylock rofi kitty
 
 # Copy NixOS system config
 echo "Copying NixOS configs..."
