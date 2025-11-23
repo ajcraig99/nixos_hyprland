@@ -1,0 +1,13 @@
+{
+  "height": 40,
+  "layer": "top",
+  "position": "top",
+  "margin": "8px 10px 0px 10px",
+  "include": ["~/.config/waybar/modules.json"],
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["group/clock"],
+  "modules-right": ["mpris", "custom/idle-toggle", "group/all-right-modules"]
+
+}
+
+

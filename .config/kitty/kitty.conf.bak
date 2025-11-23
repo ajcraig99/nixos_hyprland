@@ -1,0 +1,41 @@
+# Clear ALL default shortcuts first
+clear_all_shortcuts yes
+
+# Now set ONLY the shortcuts you want
+# Browser-style tab shortcuts
+map ctrl+t new_tab
+map ctrl+w close_tab
+map ctrl+tab next_tab
+map ctrl+shift+tab previous_tab
+map ctrl+page_up previous_tab
+map ctrl+page_down next_tab
+
+# Number shortcuts for direct tab access
+map ctrl+1 goto_tab 1
+map ctrl+2 goto_tab 2
+map ctrl+3 goto_tab 3
+map ctrl+4 goto_tab 4
+map ctrl+5 goto_tab 5
+map ctrl+6 goto_tab 6
+map ctrl+7 goto_tab 7
+map ctrl+8 goto_tab 8
+map ctrl+9 goto_tab -1
+
+# Essential shortcuts you'll still want
+map ctrl+shift+c copy_to_clipboard
+map ctrl+shift+v paste_from_clipboard
+map ctrl+shift+equal increase_font_size
+map ctrl+shift+minus decrease_font_size
+map ctrl+shift+f5 load_config_file
+
+# Optional: move tabs around
+map ctrl+shift+left move_tab_backward
+map ctrl+shift+right move_tab_forward
+
+# Your appearance settings
+background_opacity 0.85
+window_padding_width 12
+font_family JetBrains Mono
+font_size 12
+tab_bar_edge top
+tab_bar_style powerline
