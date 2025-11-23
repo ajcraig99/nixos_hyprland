@@ -24,8 +24,8 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
-   fileSystems."/mnt/NAS" = {
-     device = "//192.168.20.41/NAS";  # Replace with your NAS IP and share name
+   fileSystems."/mnt/NAS/Data" = {
+     device = "//192.168.20.115/Data";  # Replace with your NAS IP and share name
      fsType = "cifs";
      options = [
        "credentials=/etc/nixos/secrets/smb-credentials"
@@ -41,8 +41,42 @@
      ];
    };
 
-   fileSystems."/mnt/Backups" = {
-     device = "//192.168.20.41/Backups";  # Replace with your NAS IP and share name
+   fileSystems."/mnt/NAS/Media" = {
+     device = "//192.168.20.115/Media";  # Replace with your NAS IP and share name
+     fsType = "cifs";
+     options = [
+       "credentials=/etc/nixos/secrets/smb-credentials"
+       "uid=1000"        # Your user ID (run `id` to check)
+       "gid=100"         # Your group ID (usually 'users' group)
+       "iocharset=utf8"
+       "file_mode=0777"
+       "dir_mode=0777"
+       "vers=3.0"        # SMB version, try 2.1 or 1.0 if 3.0 doesn't work
+       "nofail"          # Don't fail boot if mount fails
+       "x-systemd.automount"  # Auto-mount on access
+       "x-systemd.device-timeout=10"
+     ];
+   };
+
+   fileSystems."/mnt/NAS/Backups" = {
+     device = "//192.168.20.115/Backups";  # Replace with your NAS IP and share name
+     fsType = "cifs";
+     options = [
+       "credentials=/etc/nixos/secrets/smb-credentials"
+       "uid=1000"        # Your user ID (run `id` to check)
+       "gid=100"         # Your group ID (usually 'users' group)
+       "iocharset=utf8"
+       "file_mode=0777"
+       "dir_mode=0777"
+       "vers=3.0"        # SMB version, try 2.1 or 1.0 if 3.0 doesn't work
+       "nofail"          # Don't fail boot if mount fails
+       "x-systemd.automount"  # Auto-mount on access
+       "x-systemd.device-timeout=10"
+     ];
+   };
+
+   fileSystems."/mnt/NAS_old" = {
+     device = "//192.168.20.41/Data";  # Replace with your NAS IP and share name
      fsType = "cifs";
      options = [
        "credentials=/etc/nixos/secrets/smb-credentials"

@@ -29,8 +29,29 @@
   # Configure basic audio support with PipeWire.
   security.rtkit.enable = true;
   services.pipewire = {
-
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
   };
+  hardware.pulseaudio.enable = false; 
+  
+    hardware.sane = {
+      enable = true;
+      extraBackends = [ pkgs.sane-backends ];
+    };
+
+    # USB device access
+    services.udev.packages = [ pkgs.sane-backends ];
+
+
+
+    services.udev.extraRules = ''
+      # Canon CanoScan LiDE 400
+      ATTR{idVendor}=="04a9", ATTR{idProduct}=="1912", MODE="0664", GROUP="scanner", ENV{libsane_matched}="yes"
+    '';
+  
   # 2. Hardware Specific Configuration
   # NVIDIA specific kernel parameters (Original settings).
   boot.kernelParams = [
@@ -93,6 +114,13 @@
     nvtopPackages.nvidia  # GPU monitor in terminal
     btop                  # System monitor
     dysk
+    veracrypt
+    sane-backends
+    sane-frontends
+    xsane
+    simple-scan
+    cnijfilter2
+    usbutils
     # Web Browser
     firefox
     # Multimedia
@@ -277,7 +305,7 @@
   # Define your user account.
   users.users.arron = {
     isNormalUser = true; # Designate 'arron' as a normal user.
-    extraGroups = [ "wheel" "networkmanager" "video" "i2c" "libvirtd" ]; # Add user to 'wheel' (for sudo) and 'networkmanager' groups.
+    extraGroups = [ "wheel" "networkmanager" "video" "i2c" "libvirtd" "scanner" "lp" ]; # Add user to 'wheel' (for sudo) and 'networkmanager' groups.
     initialPassword = "password"; # Set an initial password (CHANGE THIS AFTER INITIAL BOOT!).
     packages = with pkgs; [
       # User-specific packages can go here if you don't want them system-wide.
