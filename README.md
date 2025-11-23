@@ -1,1 +1,0 @@
-# nixos_hyprland
