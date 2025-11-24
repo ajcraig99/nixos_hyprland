@@ -9,7 +9,7 @@ MONITOR=$(hyprctl monitors | grep "Monitor" | head -n1 | awk '{print $2}')
 echo "Using monitor: $MONITOR"
 
 TARGET="$HOME/.config/wallpapers"
-WALLPAPER=$(find "$TARGET" -type f -regex '.*\.\(jpg\|jpeg\|png\|webp\|gif\)' | shuf -n 1)
+WALLPAPER=$(find -L "$TARGET" -type f -iregex '.*\.\(jpg\|jpeg\|png\|webp\|gif\)' | shuf -n 1)
 CONFIG_PATH="$HOME/.config/hypr/hyprpaper.conf"
 echo "preload = $WALLPAPER" > "$CONFIG_PATH"
 echo "wallpaper = $MONITOR, $WALLPAPER" >> "$CONFIG_PATH"  # Use detected monitor
