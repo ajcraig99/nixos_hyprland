@@ -1,0 +1,34 @@
+[list-view]
+default-column-order=['name', 'size', 'type', 'owner', 'date_modified', 'date_created_with_time', 'date_accessed', 'date_created', 'detailed_type', 'group', 'where', 'mime_type', 'date_modified_with_time', 'octal_permissions', 'permissions']
+default-visible-columns=['name', 'size', 'type', 'owner', 'date_modified', 'permissions']
+
+[preferences]
+click-double-parent-folder=true
+confirm-trash=true
+default-folder-viewer='compact-view'
+inherit-folder-viewer=true
+inherit-show-thumbnails=false
+quick-renames-with-pause-in-between=true
+show-computer-icon-toolbar=true
+show-directory-item-counts='always'
+show-full-path-titles=true
+show-hidden-files=true
+show-new-folder-icon-toolbar=true
+show-open-in-terminal-toolbar=true
+show-reload-icon-toolbar=true
+show-show-thumbnails-toolbar=true
+thumbnail-limit=uint64 5242880
+
+[preferences/menu-config]
+selection-menu-scripts=true
+
+[search]
+search-reverse-sort=false
+search-sort-column='name'
+
+[window-state]
+maximized=true
+side-pane-view='places'
+sidebar-bookmark-breakpoint=5
+sidebar-width=237
+start-with-sidebar=true
